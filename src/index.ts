@@ -4,10 +4,11 @@
  * Module dependencies.
  */
 
-import { app } from "./app";
+import { serviceApp } from "./app";
 import debug from "debug";
 import http from "http";
 import * as dotenv from "dotenv";
+import { oidcApp } from "./oidc";
 
 dotenv.config();
 
@@ -15,13 +16,13 @@ dotenv.config();
  * Get port from environment and store in Express.
  */
 var port = normalizePort(process.env.SERVER_PORT || "3000");
-app.set("port", port);
+serviceApp.set("port", port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(serviceApp);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -31,6 +32,7 @@ server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
+oidcApp.listen(3000);
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -85,4 +87,6 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
   debug("Listening on " + bind);
+  console.log(`Server is running on address ${addr}`)
+  console.log(`Server is running on port ${port}`)
 }

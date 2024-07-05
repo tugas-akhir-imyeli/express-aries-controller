@@ -1,0 +1,45 @@
+{
+  "name": "express-aries-controller",
+  "version": "1.0.0",
+  "description": "1. Run `npm init`\r 2. Install module `npm i @prisma/client cookie-parser cors dotenv express morgan prisma-exclude sqlite3`\r 3. Install types `npm i --save-dev @types/cookie-parser @types/cors @types/debug @types/express @types/morgan ts-node-dev typescript`\r 4. Add scripts to the package.json\r ```\r     \"start\": \"node --experimental-specifier-resolution=node --loader ts-node/esm dist/index.js\",\r     \"dev\": \"tsc-watch --onSuccess \\\"npm run watch\\\"\",\r     \"watch\": \"nodemon --watch './**/*.{ts,graphql}' --exec \\\"node --experimental-specifier-resolution=node --loader ts-node/esm\\\" src/index.ts\",\r     \"build\": \"tsc\",\r     \"migrate\": \"npx prisma db pull && npx prisma generate\",\r ```",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node --loader ts-node/esm dist/index.js",
+    "dev": "tsc-watch --onSuccess \"npm run watch\"",
+    "watch": "nodemon --watch './**/*.{ts,graphql}' --exec \"node --experimental-specifier-resolution=node --loader ts-node/esm\" src/index.ts",
+    "build": "tsc",
+    "migrate": "npx prisma db pull && npx prisma generate",
+    "clean": "npm run wipe-db && npm run generate-db && npm run migrate",
+    "generate-db": "node prisma/migrate.js",
+    "wipe-db": "node prisma/wipe.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.16.0",
+    "axios": "^1.7.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "nanoid": "^5.0.7",
+    "oidc-provider": "^8.4.7",
+    "prisma-exclude": "^1.0.2",
+    "sqlite3": "^5.1.7",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.2"
+  }
+}

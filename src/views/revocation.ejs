@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Revoke Page</title>
+</head>
+<body>
+    <h1>Account Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>UUID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < accountData.length; i++) { %>
+                <tr>
+                    <td><%= accountData[i].uuid %></td>
+                    <td>
+                        <form method="POST" action="/revocation/revoke">
+                            <input type="hidden" name="id" value="<%= accountData[i].id %>">
+                            <input type="hidden" name="cred_rev_id" value="<%= accountData[i].cred_rev_id %>">
+                            <input type="hidden" name="rev_reg_id" value="<%= accountData[i].rev_reg_id %>">
+                            <button type="submit">Revoke</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

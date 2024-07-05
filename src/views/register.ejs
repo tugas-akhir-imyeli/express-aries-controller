@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group p {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form autocomplete="off" action="/registration/verify" method="post">
+            <!-- <div class="form-group">
+            <p>Connection QR code</p>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+            </div> -->
+            <div class="form-group">
+                <p>Connection JSON</p>
+                <p id="connection-json" name="connection_json" ><%= invitation? invitation: "JSON missing, please resubmit your SSO request" %></p>
+            </div>
+            <div class="form-group">
+                <label for="message-id">Your Invitation Message ID</label>
+                <input type="text" id="message-id" name="message_id" placeholder="Enter your invitation message id">
+            </div>
+            <div class="form-group">
+                <p>The server will automatically send presentation request after you press the button</p>
+                <button type="button" onclick="submitForm()">Verify identity</button>
+            </div>
+        </form>
+
+        <script>
+            async function submitForm() {
+                const messageId = document.getElementById('message-id').value;
+                const response = await fetch('<%=ARIES_URL%>/connections');
+                const data = (await response.json()).results;
+                const filteredData = data.filter(item => item.invitation_msg_id === messageId);
+                if (filteredData.length === 0) {
+                    alert('No connection found with the provided message ID');
+                } else {
+                    document.querySelector('form').submit();
+                }
+            }
+        </script>
+    </div>
+
+</body>
+</html>

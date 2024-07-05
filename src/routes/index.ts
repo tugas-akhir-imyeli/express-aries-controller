@@ -1,6 +1,9 @@
 import express from "express";
+import dotenv from 'dotenv';
+import { createProofRequest } from "../helper/request";
 export var router = express.Router();
 
+dotenv.config();
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try{
