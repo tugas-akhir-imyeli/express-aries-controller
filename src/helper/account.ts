@@ -93,22 +93,35 @@ import { nanoid } from 'nanoid';
 // export default Account;
 
 
-export const findAccount = async (ctx, id) => {
+export const findAccount = async (ctx, sub, token) => {
       const account = await prisma.account.findFirst({
         where: {
-          uuid: id
+          uuid: sub
         }
       });
       return {
-        accountId: id,
-        claims(use, scope) {
-          let claims = {};
+        accountId: sub,
+
+        async claims(use, scope,  claims, rejected) {
+          console.log("CLAIMS")
+          console.log(scope)
+          console.log(claims)
+          console.log(rejected)
+          console.log(use)
+          if(scope.includes("nim")){
+            claims = {
+              ...claims,
+              nim: account.nim
+            }
+          }
           if(scope.includes('is_legal_age')){
             claims = {
               ...claims,
               is_legal_age: account.is_legal_age
             }
           }
+          console.log("END CLAIMS")
+          console.log(claims)
           return claims;
         }
       };

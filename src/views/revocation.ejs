@@ -4,11 +4,12 @@
     <title>Revoke Page</title>
 </head>
 <body>
-    <h1>Account Data</h1>
+    <h1>List of Issued Account</h1>
     <table>
         <thead>
             <tr>
                 <th>UUID</th>
+                <th>NIM</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
             <% for(let i = 0; i < accountData.length; i++) { %>
                 <tr>
                     <td><%= accountData[i].uuid %></td>
+                    <td><%= accountData[i].nim %></td>
                     <td>
                         <form method="POST" action="/revocation/revoke">
                             <input type="hidden" name="id" value="<%= accountData[i].id %>">

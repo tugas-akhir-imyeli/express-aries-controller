@@ -7,21 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model proof_session {
-  id            Int       @id @default(autoincrement())
-  uid           String?   @db.VarChar(255)
-  message_id    String?   @db.VarChar(255)
-  connection_id String    @db.VarChar(255)
-  verified      Boolean?
-  state         String    @db.VarChar(255)
-  account_id    String    @db.VarChar(255)
-  created_at    DateTime? @default(now()) @db.Timestamp(0)
-  updated_at    DateTime? @default(now()) @db.Timestamp(0)
-}
-
 model account {
   id           Int       @id @default(autoincrement())
   uuid         String    @db.VarChar(255)
+  nim          String    @db.VarChar(255)
   is_legal_age Boolean
   cred_rev_id  String    @db.VarChar(255)
   rev_reg_id   String    @db.VarChar(255)
@@ -36,4 +25,18 @@ model log {
   actor      String    @db.VarChar(255)
   created_at DateTime? @default(now()) @db.Timestamp(0)
   updated_at DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model proof_session {
+  id            Int       @id @default(autoincrement())
+  uid           String?   @db.VarChar(255)
+  message_id    String?   @db.VarChar(255)
+  connection_id String    @db.VarChar(255)
+  nim           String    @db.VarChar(255)
+  operation     String    @db.VarChar(255)
+  verified      Boolean?
+  state         String    @db.VarChar(255)
+  account_id    String    @db.VarChar(255)
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
+  updated_at    DateTime? @default(now()) @db.Timestamp(0)
 }

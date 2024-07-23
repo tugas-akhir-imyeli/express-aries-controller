@@ -55,15 +55,18 @@
 </head>
 <body>
     <div class="container">
-        <h2>Login</h2>
+        <h2>Connect with our server</h2>
         <form autocomplete="off" action="/interaction/<%=uid%>/verify-id" method="post">
             <!-- <div class="form-group">
                 <p>Connection QR code</p>
                 <input type="text" id="username" name="username" placeholder="Enter your username">
             </div> -->
             <div class="form-group">
-                <p>Connection JSON</p>
-                <p id="connection-json" name="connection_json" ><%= invitation? invitation: "JSON missing, please resubmit your SSO request" %></p>
+                <div style="display: flex;">
+                    <p>Connection JSON</p>
+                    <button  onclick="copyInvitation()" type="button">Copy JSON</button>
+                </div>
+                <p id="connection-json" name="connection_json" style="overflow-y: scroll;width: 100%;" ><%= invitation? invitation: "JSON missing, please resubmit your SSO request" %></p>
             </div>
             <div class="form-group">
                 <label for="message-id">Your Invitation Message ID</label>
@@ -74,6 +77,17 @@
             </div>
         </form>
         <script>
+            async function copyInvitation() {
+                const connectionJson = document.getElementById('connection-json');
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(connectionJson);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+                alert('JSON copied to clipboard');
+            }
             async function submitForm() {
                 const messageId = document.getElementById('message-id').value;
                 const response = await fetch('<%=ARIES_URL%>/connections');

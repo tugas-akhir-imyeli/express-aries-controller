@@ -35,6 +35,7 @@ router.post("/verify", async function (req, res, next) {
         await prisma.account.create({
             data: {
                 uuid: uuid,
+                nim: "",
                 is_legal_age: true,
                 cred_rev_id: "",
                 rev_reg_id: "",
@@ -85,7 +86,7 @@ router.get("/end", async function (req, res, next) {
 
 router.post("/delete-account", async function (req, res, next) {
     try{
-        const {uuid} = req.body;
+        const {uuid, connectionId} = req.body;
         const account = await prisma.account.findFirst({
             where: {
                 uuid: uuid
@@ -96,6 +97,13 @@ router.post("/delete-account", async function (req, res, next) {
                 id: account.id
             }
         });
+
+        await prisma.proof_session.deleteMany({
+            where: {
+                connection_id: connectionId
+            }
+        });
+
         res.send({ message: "Account has been deleted" }).status(200);
     } catch(error:any){
         console.error(error.message);

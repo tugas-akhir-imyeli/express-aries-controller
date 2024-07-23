@@ -43,6 +43,8 @@ connection.connect((err) => {
                     uid VARCHAR(255),
                     message_id VARCHAR(255),
                     connection_id VARCHAR(255) NOT NULL,
+                    nim VARCHAR(255) NOT NULL,
+                    operation VARCHAR(255) NOT NULL,
                     verified BOOLEAN,
                     state VARCHAR(255) NOT NULL,
                     account_id VARCHAR(255) NOT NULL,
@@ -73,7 +75,7 @@ connection.connect((err) => {
 
             connection.query(createTableQuery, (err) => {
                 if (err) {
-                    console.error('Error creating the table:', err);
+                    console.error('Error creating the table:', err);    
                     return;
                 }
 
@@ -85,6 +87,7 @@ connection.connect((err) => {
                 CREATE TABLE IF NOT EXISTS account (
                     id INT PRIMARY KEY AUTO_INCREMENT,
                     uuid VARCHAR(255) NOT NULL,
+                    nim VARCHAR(255) NOT NULL,
                     is_legal_age BOOLEAN NOT NULL,
                     cred_rev_id VARCHAR(255) NOT NULL,
                     rev_reg_id VARCHAR(255) NOT NULL,

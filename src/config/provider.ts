@@ -29,13 +29,15 @@ export const configuration = {
             enabled: true
         }
     },
+    conformIdTokenClaims: false,
     interactions: {
         url(ctx, interaction) { // eslint-disable-line no-unused-vars
           return `/interaction/${interaction.uid}`;
         },
       },
     claims: {
-        is_legal_age: ['is_legal_age']
+        is_legal_age: ['is_legal_age'],
+        nim: ['nim']
     },
     clients: [
     {

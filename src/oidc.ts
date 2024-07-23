@@ -140,6 +140,7 @@ function setNoCache(req, res, next) {
           },
           data: {
             message_id: req.body.message_id,
+            operation: "login",
             uid: uid
           }
         });
@@ -150,7 +151,9 @@ function setNoCache(req, res, next) {
             message_id: req.body.message_id,
             uid: uid,
             state: "initial",
-            account_id: ""
+            account_id: "",
+            operation: "login",
+            nim: ""
           }
         });
       }
@@ -283,5 +286,14 @@ function setNoCache(req, res, next) {
       await oidc.interactionFinished(req, res, result, { mergeWithLastSubmission: false });
     } catch (err) {
       next(err);
+    }
+  });
+
+  oidcApp.get("/registration", async (req, res) => {
+    try{
+      res.redirect(`http://localhost:${process.env.SERVER_PORT}/registration`);
+    }catch(err){
+      console.log(err);
+      res.send({ message: err.message });
     }
   });

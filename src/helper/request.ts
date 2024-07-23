@@ -15,7 +15,7 @@ export const createUuidOffer = (connectionId: string, uuid: string) => {
         },
         "filter": {
             "indy": {
-            "cred_def_id": "6P15ETqMotkRBHzTopo9xW:3:CL:86:default",
+            "cred_def_id": "6P15ETqMotkRBHzTopo9xW:3:CL:1369527:default",
                 }
             }
         }
@@ -41,15 +41,25 @@ export const createProofRequest = (connectionId: string) => {
 
     const request = {
         "auto_remove": true,
-        "comment": "Please provide proof of legal age.",
+        "comment": "Please provide KTM.",
         "connection_id": connectionId,
         "presentation_request": {
           "indy": {
-            "name": "Proof of Legal Age",
+            "name": "KTM",
             "version": "1.0",
             "nonce": "123123124125125123",
             "requested_attributes": {
-              
+              "profile": {
+                "name": "nim",
+                "non_revoked": {
+                        "to": currentUnixTimestamp
+                    },
+                "restrictions": [
+                    {
+                        "cred_def_id": "MtG3d7RxPQVaU1ZNCDbnP:3:CL:1369520:2"
+                    }
+                ]
+              }
           },
           "requested_predicates":{
               "age_over_18": {
@@ -63,7 +73,7 @@ export const createProofRequest = (connectionId: string) => {
                 // Use eighteenYearsAgoTimestamp as the value for p_value
                   "restrictions": [
                   {
-                      "cred_def_id": "9KFuBaK7Gn9EDbALjS6eVV:3:CL:74:2"  
+                      "cred_def_id": "MtG3d7RxPQVaU1ZNCDbnP:3:CL:1369520:2"  
                   }
                   ]
               }
