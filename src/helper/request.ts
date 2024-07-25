@@ -15,7 +15,7 @@ export const createUuidOffer = (connectionId: string, uuid: string) => {
         },
         "filter": {
             "indy": {
-            "cred_def_id": "6P15ETqMotkRBHzTopo9xW:3:CL:1369527:default",
+            "cred_def_id": "6P15ETqMotkRBHzTopo9xW:3:CL:86:default",
                 }
             }
         }
@@ -56,7 +56,7 @@ export const createProofRequest = (connectionId: string) => {
                     },
                 "restrictions": [
                     {
-                        "cred_def_id": "MtG3d7RxPQVaU1ZNCDbnP:3:CL:1369520:2"
+                        "cred_def_id": "9KFuBaK7Gn9EDbALjS6eVV:3:CL:74:2"
                     }
                 ]
               }
@@ -73,7 +73,7 @@ export const createProofRequest = (connectionId: string) => {
                 // Use eighteenYearsAgoTimestamp as the value for p_value
                   "restrictions": [
                   {
-                      "cred_def_id": "MtG3d7RxPQVaU1ZNCDbnP:3:CL:1369520:2"  
+                      "cred_def_id": "9KFuBaK7Gn9EDbALjS6eVV:3:CL:74:2"  
                   }
                   ]
               }

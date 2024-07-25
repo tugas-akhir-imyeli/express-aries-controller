@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Revoke Page</title>
-</head>
-<body>
-    <h1>List of Issued Account</h1>
-    <table>
-        <thead>
+   <head>
+      <title>Revoke Page</title>
+   </head>
+   <body>
+      <h1>List of Issued Account</h1>
+      <table>
+         <thead>
             <tr>
-                <th>UUID</th>
-                <th>NIM</th>
-                <th>Action</th>
+               <th>UUID</th>
+               <th>NIM</th>
+               <th>Action</th>
             </tr>
-        </thead>
-        <tbody>
+         </thead>
+         <tbody>
             <% for(let i = 0; i < accountData.length; i++) { %>
-                <tr>
-                    <td><%= accountData[i].uuid %></td>
-                    <td><%= accountData[i].nim %></td>
-                    <td>
-                        <form method="POST" action="/revocation/revoke">
-                            <input type="hidden" name="id" value="<%= accountData[i].id %>">
-                            <input type="hidden" name="cred_rev_id" value="<%= accountData[i].cred_rev_id %>">
-                            <input type="hidden" name="rev_reg_id" value="<%= accountData[i].rev_reg_id %>">
-                            <button type="submit">Revoke</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+               <td><%= accountData[i].uuid %></td>
+               <td><%= accountData[i].nim %></td>
+               <td>
+                  <form method="POST" action="/revocation/revoke">
+                     <input
+                        type="hidden"
+                        name="id"
+                        value="<%= accountData[i].id %>"
+                     />
+                     <input
+                        type="hidden"
+                        name="cred_rev_id"
+                        value="<%= accountData[i].cred_rev_id %>"
+                     />
+                     <input
+                        type="hidden"
+                        name="rev_reg_id"
+                        value="<%= accountData[i].rev_reg_id %>"
+                     />
+                     <button type="submit">Revoke</button>
+                  </form>
+               </td>
+            </tr>
             <% } %>
-        </tbody>
-    </table>
-</body>
+         </tbody>
+      </table>
+   </body>
 </html>

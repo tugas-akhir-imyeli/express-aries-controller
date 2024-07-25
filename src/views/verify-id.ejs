@@ -1,53 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script>
-        // Function to poll every 5 seconds
-        function poll() {
-            var startTime = Date.now();
-            var interval = setInterval(function() {
-                // Make an AJAX request to check if polling returns true
-                // Replace 'YOUR_POLLING_ENDPOINT' with your actual polling endpoint
-                fetch('http://localhost:<%=port%>/poll/presentation/<%=connectionId%>')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.verified === true ) {
-                            // if polling returns true, submit the form
-                            clearInterval(interval); // Stop polling
-                            document.querySelector('form').submit();
-                        } else if(data.verified === false){
-                            clearInterval(interval); // Stop polling
-                            alert('Presentation is not verified, please try again using different identity');
-                            //Redirect to end page
-                            window.location.href = '/registration';
-                        } 
-                        else {
-                            // If polling returns false, continue polling until 1 minute has passed
-                            if (Date.now() - startTime >= 60000) {
-                                clearInterval(interval); // Stop polling after 1 minute
-                                document.getElementById('timeout-message').removeAttribute('hidden');
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        // Handle any errors here
-                        console.error('Error polling:', error);
-                    });
-            }, 5000); // Poll every 5 seconds
-        }
+   <head>
+      <title>Verification Page</title>
+      <link rel="stylesheet" href="../styles/style.css" />
+   </head>
+   <body>
+      <nav class="bg-green-400">
+         <div class="max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+               <div
+                  class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+               >
+                  <div class="flex flex-shrink-0 items-center">
+                     <h1 class="text-xl font-bold">Identity Provider</h1>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </nav>
+      <form
+         autocomplete="off"
+         action="/interaction/<%=uid%>/login"
+         method="post"
+      >
+         <input type="hidden" name="connectionId" value="<%= connectionId %>" />
+      </form>
+      <div class="w-1/2 p-8 mt-8 bg-gray-200 mx-auto">
+         <h1 class="font-semibold text-lg text-center">
+            Please send your proof presentation
+         </h1>
+         <p class="text-center">
+            Please send presentation to our aries agent within 2 minutes. The
+            page will automatically redirect after it is confirmed
+         </p>
 
-        // Start the polling when the page loads
-        window.onload = function() {
+         <p hidden id="timeout-message" style="color: red">
+            Timeout: please <a href="#" onclick="poll()">click here</a>
+         </p>
+      </div>
+      <script>
+         // Function to poll every 5 seconds
+         function poll() {
+            var startTime = Date.now();
+            var interval = setInterval(function () {
+               // Make an AJAX request to check if polling returns true
+               // Replace 'YOUR_POLLING_ENDPOINT' with your actual polling endpoint
+               fetch(
+                  "http://localhost:<%=port%>/poll/presentation/<%=connectionId%>"
+               )
+                  .then((response) => response.json())
+                  .then((data) => {
+                     if (data.verified === true) {
+                        // if polling returns true, submit the form
+                        clearInterval(interval); // Stop polling
+                        document.querySelector("form").submit();
+                     } else if (data.verified === false) {
+                        clearInterval(interval); // Stop polling
+                        alert(
+                           "Presentation is not verified, please try again using different identity"
+                        );
+                        //Redirect to end page
+                        window.location.href = "/registration";
+                     } else {
+                        // If polling returns false, continue polling until 1 minute has passed
+                        if (Date.now() - startTime >= 60000) {
+                           clearInterval(interval); // Stop polling after 1 minute
+                           document
+                              .getElementById("timeout-message")
+                              .removeAttribute("hidden");
+                        }
+                     }
+                  })
+                  .catch((error) => {
+                     // Handle any errors here
+                     console.error("Error polling:", error);
+                  });
+            }, 5000); // Poll every 5 seconds
+         }
+
+         // Start the polling when the page loads
+         window.onload = function () {
             poll();
-        };
-    </script>
-</head>
-<body>
-    <form autocomplete="off" action="/interaction/<%=uid%>/login" method="post">
-        <input type="hidden" name="connectionId" value="<%= connectionId %>">
-    </form>
-    <h1>Please send your proof presentation</h1>
-    <p>Please send presentation to our aries agent within 2 minutes. The page will automatically redirect after it is confirmed</p>
-    <p hidden id="timeout-message" style="color: red;">Timeout: please <a href="#" onclick="poll()">click here</a></p>
-</body>
+         };
+      </script>
+   </body>
 </html>
