@@ -194,7 +194,7 @@ router.post("/webhook/topic/connections", async function (req, res, next) {
         console.log("CRED DEF ID")
         console.log(credDefId)
         //Check if the record.results.by_format.pres_request.requested_predicates.age_over_18.restrictions[0].cred_ref.id is equal to MtG3d7RxPQVaU1ZNCDbnP:3:CL:21:default
-        if(credDefId === "6P15ETqMotkRBHzTopo9xW:3:CL:86:default"){
+        if(credDefId === "6P15ETqMotkRBHzTopo9xW:3:CL:1452576:2"){
           console.log("MASUK")
           const accountId = record.data.by_format.pres_request.indy.requested_attributes.property.restrictions[0]["attr::uuid::value"]
           console.log(accountId)
@@ -242,7 +242,7 @@ router.post("/webhook/topic/connections", async function (req, res, next) {
               }
             });
           }
-        } else if (credDefId === "9KFuBaK7Gn9EDbALjS6eVV:3:CL:74:2"){
+        } else if (credDefId === "MtG3d7RxPQVaU1ZNCDbnP:3:CL:1452570:5"){
           const nim = record.data.by_format.pres.indy.requested_proof.revealed_attrs.profile.raw
           console.log("INI NIM")
           console.log(nim)

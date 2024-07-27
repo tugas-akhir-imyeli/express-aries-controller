@@ -1,60 +1,50 @@
-<div>
-  <h1>Consent Page</h1>
-  <p>The service provider needs your information to continue further.</p>
-</div>
-<div class="login-client-image">
-    <% if (client.logoUri) { %><img src="<%= client.logoUri %>"><% } %>
-  </div>
-  
-  <ul>
-  <% if ([details.missingOIDCScope, details.missingOIDCClaims, details.missingResourceScopes].filter(Boolean).length === 0) { %>
-    <li>the client is asking you to confirm previously given authorization</li>
-  <% } %>
-  
-  <% missingOIDCScope = new Set(details.missingOIDCScope); missingOIDCScope.delete('openid'); missingOIDCScope.delete('offline_access') %>
-  <% if (missingOIDCScope.size) { %>
-    <li>scopes:</li>
-    <ul>
-      <% missingOIDCScope.forEach((scope) => { %>
-        <li><%= scope %></li>
-      <% }) %>
-    </ul>
-  <% } %>
-  
-  <% missingOIDCClaims = new Set(details.missingOIDCClaims); ['sub', 'sid', 'auth_time', 'acr', 'amr', 'iss'].forEach(Set.prototype.delete.bind(missingOIDCClaims)) %>
-  <% if (missingOIDCClaims.size) { %>
-    <li>claims:</li>
-    <ul>
-      <% missingOIDCClaims.forEach((claim) => { %>
-        <li><%= claim %></li>
-      <% }) %>
-    </ul>
-  <% } %>
-  
-  <% missingResourceScopes = details.missingResourceScopes %>
-  <% if (missingResourceScopes) { %>
-    <% for (const [indicator, scopes] of Object.entries(details.missingResourceScopes)) { %>
-      <li><%= indicator %>:</li>
-      <ul>
-        <% scopes.forEach((scope) => { %>
-          <li><%= scope %></li>
-        <% }) %>
-      </ul>
-    <% } %>
-  <% } %>
-  
-  <% if (params.scope && params.scope.includes('offline_access')) { %>
-    <li>
-    the client is asking to have offline access to this authorization
-      <% if ((!details.missingOIDCScope) || !details.missingOIDCScope.includes('offline_access')) { %>
-        (which you've previously granted)
-      <% } %>
-    </li>
-  <% } %>
-  
-  </ul>
-  
-  <form autocomplete="off" action="/interaction/<%= uid %>/confirm" method="post">
-    <button autofocus type="submit" class="login login-submit">Continue</button>
-  </form>
-  
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Consent Page</title>
+      <link rel="stylesheet" href="../../styles/style.css" />
+   </head>
+   <body>
+      <nav class="bg-green-400">
+         <div class="max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+               <div
+                  class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+               >
+                  <div class="flex flex-shrink-0 items-center">
+                     <h1 class="text-xl font-bold">Identity Provider</h1>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </nav>
+      <div class="w-1/2 p-8 mt-8 bg-gray-200 mx-auto">
+         <h1 class="font-bold text-xl text-center">Consent Page</h1>
+         <p>The service provider needs your information to continue further.</p>
+         <% missingOIDCScope = new Set(details.missingOIDCScope);
+         missingOIDCScope.delete('openid');
+         missingOIDCScope.delete('offline_access') %> <% if
+         (missingOIDCScope.size) { %>
+         <p class="font-semibold">scopes:</p>
+         <ul class="ml-4 mb-4">
+            <% missingOIDCScope.forEach((scope) => { %>
+            <li>- <%= scope %></li>
+
+            <% })} %>
+         </ul>
+
+         <form
+            autocomplete="off"
+            action="/interaction/<%= uid %>/confirm"
+            method="post"
+         >
+            <button
+               type="submit"
+               class="bg-green-500 hover:bg-green-700 active:bg-green-800 active:transform active:scale-95 text-white font-semibold py-2 px-4 rounded transition duration-150 ease-in-out"
+            >
+               Continue
+            </button>
+         </form>
+      </div>
+   </body>
+</html>
